@@ -55,8 +55,32 @@ public class MainActivity extends AppCompatActivity {
             String phone = editTextPhone.getText().toString();
 
 
+//            Verifica se os valores foram capturados corretamente
+            Log.d("MainActivity" , "Nome" + name +  ",CPF" + cpf +  ",Email" + email + ",Phone" + phone  );
 
+//            Verifica se os campos obrigatorios (nome e Cpf) foram preenchidos
+            if(!name.isEmpty() && !cpf.isEmpty()) {
+//                Cria objeto usuarios e insere no banco de dados
+                User user = new User(name, cpf, email, phone);
+                userDao.insert(user);
+
+//                Confirmar Insercao
+                Log.d("MainActivity" , "Campos Inseridos com sucesso");
+
+                Toast.makeText(MainActivity.this, "Usuário cadastrado" , Toast.LENGTH_SHORT).show();
+
+            }else{
+//                Confirma erro na insercao
+                Log.d("MainActivity" , "Erro: Campos obrigatórios vazios");
+
+                Toast.makeText(MainActivity.this , "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
+            }
         });
+
+//        Configura o botao de Relatorio para abrir a tela de relatorio
+        buttonReport.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this , ReportActivity.class))
+                );
 
     }
 }
